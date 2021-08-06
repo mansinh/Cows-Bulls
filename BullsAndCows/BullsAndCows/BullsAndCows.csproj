@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Write.cs" />
+    <Compile Include="ASCII.cs" />
     <Compile Include="Code.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Program.cs" />

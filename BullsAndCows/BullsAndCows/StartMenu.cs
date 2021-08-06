@@ -8,25 +8,30 @@ namespace BullsAndCows
 {
     class StartMenu
     {
-        const int NEWGAME = 0;
+        
+        const int NEWGAME = 0;// Key for new game option
 
-        const int CODE_LENGTH = 1;
+        
+        const int CODE_LENGTH = 1;// Key for change code length option
         const int MIN_CODE_LENGTH = 3;
         const int MAX_CODE_LENGTH = 10;
 
-        const int GUESSES = 2;
+
+        const int GUESSES = 2;// Key for change number of guesses option
         const int MIN_GUESSES = 1;
         
 
-        int position = 0;
-        int codeLength = 4;
-        int guesses = 20;
-        ConsoleKey key;
+        int position = 0;// Key for current option/cursor position
+        int codeLength = 4;// current code length
+        int guesses = 20;// current maximum guesses until game over
+
+        ConsoleKey key;// The last key pressed
 
         public StartMenu() {
-            
 
-            while (!(key == ConsoleKey.Enter && position == 0)) {
+            // Redraw menu after each input
+            // Start new game if input is enter key when new game is selected
+            while (!(key == ConsoleKey.Enter && position == NEWGAME)) {
                 Draw();
                 ManageInput();
             }
@@ -36,6 +41,7 @@ namespace BullsAndCows
 
         void Draw() 
         {
+            // Draw Title
             Write.EmptyLine();
             Write.EmptyLine();
             string[][] TitleASCII = new string[][] { ASCII.bulls, ASCII.and, ASCII.cows };
@@ -44,18 +50,22 @@ namespace BullsAndCows
             Write.EmptyLine();
             Write.EmptyLine();
 
+            // Draw new game option
             DrawOption("Start", NEWGAME);
             Write.EmptyLine();
 
+            // Draw change code length option
             DrawOption("Code Length", CODE_LENGTH);
             DrawOption("<" + Write.SetLength(""+codeLength,5) + ">", CODE_LENGTH);
             Write.EmptyLine();
             
+            // Draw change maximum guesses option
             DrawOption("Guesses", GUESSES);
             DrawOption("<" + Write.SetLength(""+guesses,5) + ">", GUESSES);
             Write.EmptyLine();
         }
 
+        // Draw option with center alignment and highlight current option selected
         void DrawOption(string s, int p) {
             if (position == p)
                 Write.Highlight();
@@ -64,6 +74,7 @@ namespace BullsAndCows
             Console.ResetColor();
         }
 
+        // React to player direction input 
         void ManageInput() 
         {
             key = Console.ReadKey(true).Key;
@@ -94,6 +105,7 @@ namespace BullsAndCows
             Console.SetCursorPosition(0, 0);
         }
 
+        // Change option selected up or down. Wrap around if at top or bottom
         void Up() 
         {
             position--;
@@ -107,6 +119,9 @@ namespace BullsAndCows
                 position = 0;
         }
 
+        // If at either change code length or change maximum guesses, 
+        // increase the value for right arrow pressed and 
+        // decrease the value for left arrow pressed
         void Left()
         {
             switch (position)
@@ -147,13 +162,10 @@ namespace BullsAndCows
             }
         }
 
+        // Start new game with options selected
         void NewGame()
         {
             Game.instance.Start(codeLength,guesses);
-        }
-
-        
+        }     
     }
-
-
 }

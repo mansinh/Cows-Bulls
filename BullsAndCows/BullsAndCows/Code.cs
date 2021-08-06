@@ -13,9 +13,11 @@ namespace BullsAndCows
 
         public Code()
         {
+            // initiate random number generator
             rand = new Random();
         }
 
+        // Generate a code with no repeating numbers of length (length)
         public void GenerateCode(int length)
         {
             //length = Math.Min(Math.Max(0, length), 10);
@@ -31,23 +33,30 @@ namespace BullsAndCows
             }
 
         }
+
+        // Check for cows (correct number, incorrect position) and bulls (correct number and position)
         public int[] Check(string guess)
         {
             int cows = 0;
             int bulls = 0;
 
+            // for each number in guess, compare with each number in code
             for (int i = 0; i < guess.Length; i++)
             {
                 for (int j = 0; j < code.Length; j++)
                 {
+                    // correct number
                     if (guess[i] == code[j])
                     {
+                        
                         if (i == j)
                         {
+                            // correct position
                             bulls++;
                         }
                         else
                         {
+                            // incorrect position
                             cows++;
                         }
                     }
@@ -55,6 +64,7 @@ namespace BullsAndCows
             }
             return new int[] { bulls, cows };
         }
+
 
         public string GetCode()
         {
